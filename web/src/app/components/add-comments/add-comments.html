@@ -1,0 +1,33 @@
+<main>
+    <mat-card
+        appearance="outlined"
+        class="bg-white !border-none"
+    >   
+        <div class="flex items-start gap-4 p-4 rounded-xl ">
+            <!-- Avatar -->
+            <img
+                src="assets/avatars/image-juliusomo.png"
+                alt="avatar"
+                class="w-10 h-10 rounded-full"
+            />
+    
+            <!-- Textarea -->
+            <textarea
+                rows="3"
+                placeholder="Add a comment..."
+                class="flex-1 resize-none border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                [(ngModel)]="newComments" 
+            ></textarea>
+    
+            <!-- Button -->
+            <button
+                mat-flat-button
+                class="!h-10 !px-6 !rounded-lg !bg-purple-600"
+                (click)="addComments()"
+            >
+                SEND
+            </button>
+        </div>
+    </mat-card>
+
+</main>

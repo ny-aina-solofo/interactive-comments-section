@@ -1,0 +1,68 @@
+<main id="comments-item-container">
+    <mat-card
+        appearance="outlined"
+        class="!border-none"
+    >
+        <div class="flex gap-4 p-4 rounded-xl">
+            <!-- Votes -->
+            <div
+                class="bg-grey-100 rounded-lg px-2 py-3 text-indigo-600 font-semibold"
+                id="votes"
+            >
+                <up-vote/>
+            </div>
+            
+            <!-- Content -->
+            <div class="flex-1 space-y-2" id="comments">
+                <!-- Header -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img
+                            src="assets/avatars/image-amyrobson.png"
+                            alt="avatar"
+                            class="w-8 h-8 rounded-full"
+                        />
+    
+                        <span class="font-semibold text-grey-800">amyrobson</span>
+                        <span class="text-sm font-normal text-grey-500">1 month ago</span>
+                    </div>
+                    <div class="flex flex-row gap-8">
+                        <div class="flex gap-2 text-sm font-bold text-pink-400 cursor-pointer">
+                            <img
+                                src="assets/icon-delete.svg"
+                                alt="icon-delete"
+                                class="size-4 w-3"
+                            />
+                            Delete
+                        </div>
+                        
+                        <div class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer">
+                            <img
+                                src="assets/icon-edit.svg"
+                                alt="icon-edit"
+                                class="size-4 "
+                            />
+                            Edit
+                        </div>
+                        
+                        <div class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer">
+                            <img
+                                src="assets/icon-reply.svg"
+                                alt="icon-reply"
+                                class="size-4"
+                            />
+                            Reply
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Text -->
+                <p class="text-grey-500 font-normal leading-relaxed">
+                    Impressive! Though it seems the drag feature could be improved. But
+                    overall it looks incredible. You’ve nailed the design and the
+                    responsiveness at various breakpoints works really well.
+                </p>
+            </div>
+        </div>
+    </mat-card>
+</main>
