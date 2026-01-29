@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 
 @Component({
   selector: 'up-vote',
@@ -26,7 +26,7 @@ import { Component, signal } from '@angular/core';
 })
 
 export class UpvotesComponent {
-    score: number = 0;
+    @Input() score:number = 0;
     
     upVote() {
         this.score += 1;    

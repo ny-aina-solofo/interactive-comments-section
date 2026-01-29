@@ -9,7 +9,7 @@
                 class="flex flex-col items-center justify-between bg-grey-100 rounded-lg px-2 py-3 text-indigo-600 font-semibold"
                 id="votes"
             >
-                <up-vote/>
+                <up-vote [score]="reply.score"/>
             </div>
             
             <!-- Content -->
@@ -18,13 +18,13 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <img
-                            src="assets/avatars/image-ramsesmiron.png"
+                            src="assets/{{reply.user.image.png}}"
                             alt="avatar"
                             class="w-8 h-8 rounded-full"
                         />
     
-                        <span class="font-semibold text-grey-800">ramsesmiron</span>
-                        <span class="text-sm font-normal text-grey-500">1 week ago</span>
+                        <span class="font-semibold text-grey-800">{{reply.user.username}} </span>
+                        <span class="text-sm font-normal text-grey-500">{{reply.createdAt}} </span>
                     </div>
                     <div class="flex flex-row gap-8">
                         <div class="flex gap-2 text-sm font-bold text-pink-400 cursor-pointer">
@@ -58,9 +58,8 @@
     
                 <!-- Text -->
                 <p class="text-grey-500 font-normal leading-relaxed">
-                    <span class="text-purple-600 font-semibold">@maxblagun</span>
-                    If you’re still new, I’d recommend focusing on the fundamentals of
-                    HTML, CSS, and JS before considering React.
+                    <span class="text-purple-600 font-semibold">{{reply.replyingTo}} </span>
+                    {{reply.content}}
                 </p>
             </div>
         </div>

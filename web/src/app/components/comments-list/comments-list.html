@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-4">
+    <div id="comment-list" class="flex  flex-col gap-4">
+        @for (comment of comments; track comment.id) {
+            <comments-item [comment]="comment"></comments-item>
+            @for (replies of comment.replies; track replies.id) {
+                <reply-comment [reply]="replies"/>
+            }   
+        }
+    </div>
+    <add-comments/>
+</div>
+

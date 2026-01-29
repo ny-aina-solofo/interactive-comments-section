@@ -1,12 +1,10 @@
 import { Component, signal } from '@angular/core';
+import { CommentsListComponent } from './components/comments-list/comments-list';
 // import { RouterOutlet } from '@angular/router';
-import {AddCommentsComponent}  from './components/add-comments/add-comments';
-import { CommentsItemComponent } from './components/comments-item/comments-item';
-import { ReplyCommentComponent } from './components/reply-comment/reply-comment';
 
 @Component({
   selector: 'app-root',
-  imports: [AddCommentsComponent,CommentsItemComponent,ReplyCommentComponent],
+  imports: [CommentsListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
