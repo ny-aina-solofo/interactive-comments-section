@@ -1,4 +1,4 @@
-export type User = {
+export interface User  {
   image: {
     png: string;
     webp: string;

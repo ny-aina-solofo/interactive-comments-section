@@ -1,7 +1,7 @@
 import { Component, Input, signal } from '@angular/core';
 
 @Component({
-  selector: 'up-vote',
+  selector: 'score',
   imports: [],
   template: `
     <div class="flex flex-col gap-3">
@@ -25,7 +25,7 @@ import { Component, Input, signal } from '@angular/core';
   `,
 })
 
-export class UpvotesComponent {
+export class ScoreComponent {
     @Input() score:number = 0;
     
     upVote() {

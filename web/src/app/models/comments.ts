@@ -1,7 +1,7 @@
 import { Reply }from './reply';
 import { User } from './user';
 
-export type Comment = {
+export interface Comment  {
   id: number;
   content: string;
   createdAt: string;

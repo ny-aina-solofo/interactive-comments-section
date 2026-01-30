@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { CommentsListComponent } from './components/comments-list/comments-list';
+import { CommentListComponent } from './components/comment-list/comment-list';
 // import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [CommentsListComponent],
+  imports: [CommentListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

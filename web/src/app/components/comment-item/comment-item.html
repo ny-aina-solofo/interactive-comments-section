@@ -1,4 +1,4 @@
-<main id="comments-item-container">
+<main class="" id="comments-item-container">
     <mat-card
         appearance="outlined"
         class="!border-none"
@@ -8,20 +8,20 @@
                 class="bg-grey-100 rounded-lg px-2 py-3 text-indigo-600 font-semibold"
                 id="votes"
             >
-                <up-vote [score]="comment.score"/>
+                <score [score]="comment_data.score"/>
             </div>
             
             <div class="flex-1 space-y-2" id="comments">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <img
-                            src="assets/{{comment.user.image.png}}"
-                            alt="{{comment.user.username}}"
+                            [src]="'assets/' + comment_data.user.image.png"
+                            [alt]="comment_data.user.username"
                             class="w-8 h-8 rounded-full"
                         />
     
-                        <span class="font-semibold text-grey-800">{{comment.user.username}} </span>
-                        <span class="text-sm font-normal text-grey-500">{{comment.createdAt}} </span>
+                        <span class="font-semibold text-grey-800">{{comment_data.user.username}} </span>
+                        <span class="text-sm font-normal text-grey-500">{{comment_data.createdAt}} </span>
                     </div>
                     <div class="flex flex-row gap-8">
                         <div class="flex gap-2 text-sm font-bold text-pink-400 cursor-pointer">
@@ -42,7 +42,10 @@
                             Edit
                         </div>
                         
-                        <div class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer">
+                        <div 
+                            class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer" 
+                            (click)="handleShowForm()"    
+                        >
                             <img
                                 src="assets/icon-reply.svg"
                                 alt="icon-reply"
@@ -53,8 +56,15 @@
                     </div>
                 </div>
     
-                <p class="text-grey-500 font-normal leading-relaxed">{{comment.content}} </p>
+                <p class="text-grey-500 font-normal leading-relaxed">
+                    {{comment_data.content}} 
+                </p>
             </div>
         </div>
     </mat-card>
+    @if (store.activeReplyIdState() === comment_data.id) {
+        <div class="mt-4">
+            <app-form [comment_data]="comment_data"/>
+        </div>
+    }
 </main>

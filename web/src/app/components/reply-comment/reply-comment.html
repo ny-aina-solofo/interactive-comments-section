@@ -1,30 +1,27 @@
-<main class="ml-10 border-l-2 border-gray-200 pl-6" id="reply-comment-container">
+<main >
     <mat-card
         appearance="outlined"
         class="!border-none"
     >
         <div class="flex gap-4 p-4 rounded-xl">
-            <!-- Votes -->
             <div
                 class="flex flex-col items-center justify-between bg-grey-100 rounded-lg px-2 py-3 text-indigo-600 font-semibold"
                 id="votes"
             >
-                <up-vote [score]="reply.score"/>
+                <score [score]="reply_data.score"/>
             </div>
             
-            <!-- Content -->
             <div class="flex-1 space-y-2" id="comments">
-                <!-- Header -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <img
-                            src="assets/{{reply.user.image.png}}"
-                            alt="avatar"
+                            [src]="'assets/' + reply_data.user.image.png"
+                            [alt]="reply_data.user.username"
                             class="w-8 h-8 rounded-full"
                         />
     
-                        <span class="font-semibold text-grey-800">{{reply.user.username}} </span>
-                        <span class="text-sm font-normal text-grey-500">{{reply.createdAt}} </span>
+                        <span class="font-semibold text-grey-800">{{reply_data.user.username}} </span>
+                        <span class="text-sm font-normal text-grey-500">{{reply_data.createdAt}} </span>
                     </div>
                     <div class="flex flex-row gap-8">
                         <div class="flex gap-2 text-sm font-bold text-pink-400 cursor-pointer">
@@ -45,7 +42,10 @@
                             Edit
                         </div>
                         
-                        <div class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer">
+                        <div 
+                            class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer"
+                            (click)="handleShowForm()"    
+                        >
                             <img
                                 src="assets/icon-reply.svg"
                                 alt="icon-reply"
@@ -56,12 +56,16 @@
                     </div>
                 </div>
     
-                <!-- Text -->
                 <p class="text-grey-500 font-normal leading-relaxed">
-                    <span class="text-purple-600 font-semibold">{{reply.replyingTo}} </span>
-                    {{reply.content}}
+                    <span class="text-purple-600 font-semibold">{{reply_data.replyingTo}} </span>
+                    {{reply_data.content}}
                 </p>
             </div>
         </div>
     </mat-card>
+    <!-- @if (showForm) {
+        <div class="mt-4">
+            <app-form [reply_data]="reply"/>
+        </div>
+    } -->
 </main>

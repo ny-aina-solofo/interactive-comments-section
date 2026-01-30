@@ -1,27 +1,27 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component,inject,Input, signal } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
-import { Reply } from '../../models/reply';
 import { ScoreComponent } from '../score/scrore';
+import { Comment } from '../../models/comments';
 import { FormComponent } from '../form/form';
+import { CommentStore } from '../../store/comment-store';
 
 @Component({
-  selector: 'reply-comment',
+  selector: 'comment-item',
   imports: [ScoreComponent,FormComponent,MatCardModule,MatButtonModule],
-  templateUrl: './reply-comment.html',
+  templateUrl: './comment-item.html',
 })
 
-export class ReplyCommentComponent {
-  @Input() reply_data:Reply;
-  showForm = false;
-
+export class CommentItemComponent {
+  @Input() comment_data:Comment;
+  store = inject(CommentStore);
+  
   constructor() {
-    this.reply_data = {
+    this.comment_data = {
       id: 0,
       content: '',
       createdAt: '',
       score: 0,
-      replyingTo: '',
       user: {
         image: {
           png: '',
@@ -29,9 +29,11 @@ export class ReplyCommentComponent {
         },
         username: '',
       },
+      replies: [],
     };
   }
+
   handleShowForm(){
-    this.showForm = !this.showForm;
+    this.store.showReplyForm(this.comment_data.id);
   }
 }

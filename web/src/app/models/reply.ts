@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export type Reply = {
+export interface Reply  {
   id: number;
   content: string;
   createdAt: string;
