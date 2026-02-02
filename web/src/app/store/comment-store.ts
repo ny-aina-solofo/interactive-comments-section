@@ -64,16 +64,12 @@ export class CommentStore {
     this.comments.update((currentComment) => currentComment.filter((comment) => comment.id !== id));
   }
 
-//   updateQuantity(id: string, quantity: number) {
-//     if (quantity <= 0) {
-//       this.removeComment(id);
-//       return;
-//     }
 
-//     this.Comments.update((currentComments) =>
-//       currentComments.map((Comment) => (Comment.id === id ? {...Comment, quantity} : Comment)),
-//     );
-//   }
+  editComment(id: number | undefined, newContent: string) {
+    this.comments.update((currentComment) =>
+      currentComment.map((comment => (comment.id === id ? {...comment, content : newContent} : comment)),
+    ));
+  }
 
   
 }

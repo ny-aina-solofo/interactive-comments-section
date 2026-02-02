@@ -5,7 +5,7 @@ import { FormComponent } from '../form/form';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CommentStore } from '../../store/comment-store';
-import { DeleteDialogComponent } from '../dialog/dialog';
+import { DeleteDialogComponent } from '../dialog/delete-dialog';
 
 @Component({
   selector: 'reply-comment',

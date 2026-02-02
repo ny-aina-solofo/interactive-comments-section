@@ -5,11 +5,12 @@ import { FormComponent } from '../form/form';
 import { CommentStore } from '../../store/comment-store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DeleteDialogComponent } from '../dialog/dialog';
+import { DeleteDialogComponent } from '../dialog/delete-dialog';
+import { EditDialogComponent } from '../dialog/edit-dialog';
 
 @Component({
   selector: 'comment-item',
-  imports: [ScoreComponent,FormComponent,ButtonModule,CardModule,DeleteDialogComponent],
+  imports: [ScoreComponent,FormComponent,ButtonModule,CardModule,DeleteDialogComponent,EditDialogComponent],
   templateUrl: './comment-item.html',
 })
 

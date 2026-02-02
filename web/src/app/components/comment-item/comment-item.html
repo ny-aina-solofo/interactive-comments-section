@@ -24,15 +24,7 @@
                     </div>
                     <div class="flex flex-row gap-8">
                         <delete-dialog [comment_data]="comment_data"/>
-                        <div class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer">
-                            <img
-                                src="assets/icon-edit.svg"
-                                alt="icon-edit"
-                                class="size-4 "
-                            />
-                            Edit
-                        </div>
-                        
+                        <edit-dialog [comment_data]="comment_data" />
                         <div 
                             class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer" 
                             (click)="handleShowForm()"    
