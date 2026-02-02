@@ -1,13 +1,13 @@
 <div class="flex flex-col gap-4">
     @for (comment of store.commentItems(); track comment.id) {
         <comment-item [comment_data]="comment"/>
-        <!-- @if (comment.replies.length > 0) {
+        @if (comment.replies.length > 0) {
             @for (reply of comment.replies; track reply.id) {
                 <div class="ml-10  pl-6" id="reply-comment-container">
-                    <reply-comment [reply_data]="reply"/>
+                    <reply-item [reply_data]="reply" [comment_id]="comment.id"/>
                 </div>
             }   
-        } -->
+        }
     }
     <app-form />
 </div>

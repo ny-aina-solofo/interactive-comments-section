@@ -6,15 +6,17 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CommentStore } from '../../store/comment-store';
 import { DeleteDialogComponent } from '../dialog/delete-dialog';
+import { EditDialogComponent } from '../dialog/edit-dialog';
 
 @Component({
-  selector: 'reply-comment',
-  imports: [ScoreComponent,FormComponent,ButtonModule,CardModule,DeleteDialogComponent],
-  templateUrl: './reply-comment.html',
+  selector: 'reply-item',
+  imports: [ScoreComponent,FormComponent,ButtonModule,CardModule,DeleteDialogComponent,EditDialogComponent],
+  templateUrl: './reply-item.html',
 })
 
 export class ReplyCommentComponent {
   @Input() reply_data:Reply;
+  @Input() comment_id:number = 0;
   store = inject(CommentStore);
   
   constructor() {

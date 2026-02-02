@@ -1,6 +1,6 @@
 <main >
     <p-card
-        class="!bg-white !border-none !rounded-xl"
+        class="!bg-white !border-none !rounded-xl !shadow-none"
     >
         <div class="flex gap-4">
             <div
@@ -23,19 +23,21 @@
                         <span class="font-normal  text-grey-500">{{reply_data.createdAt}} </span>
                     </div>
                     <div class="flex flex-row gap-8">
-                        <!-- <delete-dialog [data]="reply_data"/> -->
-                        
-                        <div class="flex gap-2 font-bold text-purple-600 cursor-pointer">
-                            <img
-                                src="assets/icon-edit.svg"
-                                alt="icon-edit"
-                                class="size-4 "
-                            />
-                            Edit
-                        </div>
-                        
+                        <delete-dialog [data]="{
+                            type: 'reply',
+                            comment_id: comment_id,
+                            reply_id: reply_data.id,
+                            username: reply_data.user.username
+                        }"/>
+                        <edit-dialog [data]="{
+                            type: 'reply',
+                            comment_id: comment_id,
+                            reply_id: reply_data.id,
+                            content: reply_data.content,
+                            username: reply_data.user.username
+                        }" />
                         <div 
-                            class="flex gap-2 font-bold text-purple-600 cursor-pointer"
+                            class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer"
                             (click)="handleShowForm()"    
                         >
                             <img
@@ -57,7 +59,11 @@
     </p-card>
     @if (store.activeReplyIdState() === reply_data.id) {
         <div class="mt-4">
-            <app-form [reply_data]="reply_data"/>
+            <app-form [data]="{
+                type: 'reply',
+                comment_id: comment_id,
+                username: reply_data.user.username
+            }"/>
         </div>
     }
 </main>

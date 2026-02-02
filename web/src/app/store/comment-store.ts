@@ -60,8 +60,24 @@ export class CommentStore {
   hideReplyForm() {
     this.activeReplyId.set(null);
   }
+
   deleteComment(id: number | undefined) {
     this.comments.update((currentComment) => currentComment.filter((comment) => comment.id !== id));
+  }
+
+  deleteReply(comment_id: number, reply_id: number) {
+    this.comments.update((comments) =>
+      comments.map((comment) =>
+        comment.id === comment_id
+          ? {
+              ...comment,
+              replies: comment.replies.filter(
+                (reply) => reply.id !== reply_id
+              ),
+            }
+          : comment
+      )
+    );
   }
 
 
@@ -70,6 +86,23 @@ export class CommentStore {
       currentComment.map((comment => (comment.id === id ? {...comment, content : newContent} : comment)),
     ));
   }
+
+  editReply(comment_id: number, reply_id: number, newContent: string ) {
+    this.comments.update((comments) =>
+      comments.map((comment) =>
+        comment.id === comment_id
+          ? {
+              ...comment,
+              replies: comment.replies.map(
+                (reply) => reply.id === reply_id ?
+                {...reply, content : newContent} : reply
+              ),
+            }
+          : comment
+      )
+    );
+  }
+
 
   
 }

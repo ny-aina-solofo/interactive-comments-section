@@ -23,8 +23,17 @@
                         <span class="font-normal text-grey-500">{{comment_data.createdAt}} </span>
                     </div>
                     <div class="flex flex-row gap-8">
-                        <delete-dialog [comment_data]="comment_data"/>
-                        <edit-dialog [comment_data]="comment_data" />
+                        <delete-dialog [data]="{
+                            type: 'comment',
+                            comment_id: comment_data.id,
+                            username: comment_data.user.username
+                        }"/>
+                        <edit-dialog [data]="{
+                            type: 'comment',
+                            comment_id: comment_data.id,
+                            content:comment_data.content,
+                            username: comment_data.user.username
+                        }" />
                         <div 
                             class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer" 
                             (click)="handleShowForm()"    
@@ -45,9 +54,13 @@
             </div>
         </div>
     </p-card>
-    <!-- @if (store.activeReplyIdState() === comment_data.id) {
+    @if (store.activeReplyIdState() === comment_data.id) {
         <div class="mt-4">
-            <app-form [comment_data]="comment_data"/>
+            <app-form [data]="{
+                type: 'reply',
+                comment_id: comment_data.id,
+                username: comment_data.user.username
+            }"/>
         </div>
-    } -->
+    }
 </main>

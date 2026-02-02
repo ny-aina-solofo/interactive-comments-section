@@ -2,7 +2,10 @@ import { Component, inject, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CommentStore } from '../../store/comment-store';
-import { Comment } from '../../models/comments';
+
+type DeleteData =
+  | { type: 'comment'; comment_id: number; username: string }
+  | { type: 'reply'; comment_id: number; reply_id: number; username: string };
 
 @Component({
     selector:'delete-dialog',
@@ -29,7 +32,7 @@ import { Comment } from '../../models/comments';
             >
                 <ng-template #header>
                     <h2 class="text-lg font-bold text-grey-500 ">
-                        Delete {{comment_data?.user?.username}} comment
+                        Delete {{data?.username}} {{data?.type}}
                     </h2>
                 </ng-template>
                 <div class="flex flex-col gap-4">
@@ -58,15 +61,19 @@ import { Comment } from '../../models/comments';
     imports: [ButtonModule, DialogModule]
 })
 export class DeleteDialogComponent {
-    @Input() comment_data:Comment | undefined;
+    @Input() data:DeleteData | undefined;
     visible: boolean = false;
     store = inject(CommentStore);
 
     showDialog() {
         this.visible = true;
     }
-    handleDeleteComment(){
-        this.store.deleteComment(this.comment_data?.id);
+    handleDeleteComment() {
+        if (this.data?.type === "reply") {
+            this.store.deleteReply(this.data?.comment_id, this.data?.reply_id );    
+        } else {
+            this.store.deleteComment(this.data?.comment_id);
+        }
         this.visible = false;
     }
 

@@ -4,6 +4,11 @@ import { DialogModule } from 'primeng/dialog';
 import { CommentStore } from '../../store/comment-store';
 import { Comment } from '../../models/comments';
 import { FormsModule } from '@angular/forms';
+import { Reply } from '../../models/reply';
+
+type EditData =
+  | { type: 'comment'; comment_id: number; content:string; username: string }
+  | { type: 'reply'; comment_id: number; reply_id: number; content:string; username: string };
 
 @Component({
     selector:'edit-dialog',
@@ -32,7 +37,7 @@ import { FormsModule } from '@angular/forms';
             >
                 <ng-template #header>
                     <h2 class="text-lg font-bold text-grey-500 ">
-                        Edit {{comment_data?.user?.username}} comment
+                        Edit {{data?.username}} {{data?.type}}
                     </h2>
                 </ng-template>
                 <div class="flex flex-col gap-6 py-2">
@@ -40,7 +45,7 @@ import { FormsModule } from '@angular/forms';
                         rows="5"
                         cols="30"
                         #textarea
-                        [placeholder]="comment_data?.content"
+                        [placeholder]="data?.content"
                         class="w-full box-border resize-none border border-gray-200 
                             text-grey-800 rounded-lg p-3 focus:outline-none 
                             focus:ring-2 focus:ring-purple-600"
@@ -70,19 +75,23 @@ import { FormsModule } from '@angular/forms';
     imports: [ButtonModule, DialogModule,FormsModule]
 })
 export class EditDialogComponent {
-    @Input() comment_data:Comment | undefined;
+    @Input() data:EditData | undefined;
     comment:string = "";
     visible: boolean = false;
     store = inject(CommentStore);
 
     showDialog() {
-        this.comment = this.comment_data?.content ?? '';
+        this.comment = this.data?.content ?? '';
         this.visible = true;
     }
     handleEditComment(){
         const comment = this.comment.trim();
         if (!comment) return;
-        this.store.editComment(this.comment_data?.id, comment);
+        if (this.data?.type === "reply") {
+            this.store.editReply(this.data?.comment_id, this.data?.reply_id, comment );    
+        } else {
+            this.store.editComment(this.data?.comment_id, comment);
+        }
         this.visible = false;
         this.comment = "";
     }

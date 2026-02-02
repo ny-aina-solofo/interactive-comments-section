@@ -2,11 +2,12 @@ import { AfterViewInit, Component, computed, effect, ElementRef, inject, Input, 
 import {FormsModule} from '@angular/forms';
 import { InteractiveCommentsService } from '../../services/comment.service';
 import { User } from '../../models/user';
-import { Reply } from '../../models/reply';
 import { CommentStore } from '../../store/comment-store';
-import { Comment } from '../../models/comments';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+
+type FormData =
+  | { type: 'reply'; comment_id: number; username: string }
 
 @Component({
   selector: 'app-form',
@@ -15,46 +16,17 @@ import { CardModule } from 'primeng/card';
 })
 
 export class FormComponent {
-  @Input() comment_data: Comment  ;
-  @Input() reply_data: Reply  ;
+  @Input() data: FormData | undefined  ;
+  // @Input() reply_data: Reply  ;
   @ViewChild('textarea') textarea?: ElementRef<HTMLTextAreaElement>;
-  replyingTo = computed(() => this.comment_data?.user?.username ?? '');
   store = inject(CommentStore);
   user: User;
   comment = signal('');
 
   constructor(private commentService: InteractiveCommentsService) {
     this.user = commentService.getUser();
-    this.comment_data = {
-      id: 0,
-      content: '',
-      createdAt: '',
-      score: 0,
-      user: {
-        image: {
-          png: '',
-          webp: '',
-        },
-        username: '',
-      },
-      replies: [],
-    };
-    this.reply_data = {
-      id: 0,
-      content: '',
-      createdAt: '',
-      score: 0,
-      replyingTo: '',
-      user: {
-        image: {
-          png: '',
-          webp: '',
-        },
-        username: '',
-      },
-    };
     effect(() => {
-      const username = this.replyingTo();
+      const username = this.data?.username;
       if (username) {
         this.comment.set(`@${username} `);
         queueMicrotask(() => this.textarea?.nativeElement.focus());
@@ -66,12 +38,12 @@ export class FormComponent {
     const comment = this.comment().trim();
     if (!comment) return;
 
-    if (this.replyingTo()) {
-      const comment_id = this.comment_data.id;
-      const commentWithReply = comment.replace(`@${this.replyingTo()} `, '')
-      const replyingTo =  this.replyingTo();
+    if (this.data) {
+      const comment_id = this.data.comment_id;
+      const commentWithReply = comment.replace(`@${this.data.username} `, '')
+      const replyingTo =  this.data.username;
       this.store.addReply(comment_id,commentWithReply,replyingTo,this.user);
-      // this.commentService.addComment(reply);
+      // this.commentService.addComment(reply);  
     } else {
       this.store.addComment(comment,this.user);
       // this.commentService.addComment(newComment);
