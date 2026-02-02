@@ -1,20 +1,22 @@
-import { Component, Input, signal } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
+import { Component, inject, Input, signal } from '@angular/core';
 import { Reply } from '../../models/reply';
 import { ScoreComponent } from '../score/scrore';
 import { FormComponent } from '../form/form';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { CommentStore } from '../../store/comment-store';
+import { DeleteDialogComponent } from '../dialog/dialog';
 
 @Component({
   selector: 'reply-comment',
-  imports: [ScoreComponent,FormComponent,MatCardModule,MatButtonModule],
+  imports: [ScoreComponent,FormComponent,ButtonModule,CardModule,DeleteDialogComponent],
   templateUrl: './reply-comment.html',
 })
 
 export class ReplyCommentComponent {
   @Input() reply_data:Reply;
-  showForm = false;
-
+  store = inject(CommentStore);
+  
   constructor() {
     this.reply_data = {
       id: 0,
@@ -32,6 +34,6 @@ export class ReplyCommentComponent {
     };
   }
   handleShowForm(){
-    this.showForm = !this.showForm;
+    this.store.showReplyForm(this.reply_data.id);
   }
 }

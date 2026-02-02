@@ -1,21 +1,22 @@
 import { AfterViewInit, Component, computed, effect, ElementRef, inject, Input, OnChanges,  signal,SimpleChanges, ViewChild } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import { InteractiveCommentsService } from '../../services/comment.service';
 import { User } from '../../models/user';
 import { Reply } from '../../models/reply';
 import { CommentStore } from '../../store/comment-store';
 import { Comment } from '../../models/comments';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-form',
-  imports: [FormsModule,MatCardModule,MatButtonModule],
+  imports: [FormsModule,ButtonModule,CardModule],
   templateUrl: './form.html',
 })
 
 export class FormComponent {
   @Input() comment_data: Comment  ;
+  @Input() reply_data: Reply  ;
   @ViewChild('textarea') textarea?: ElementRef<HTMLTextAreaElement>;
   replyingTo = computed(() => this.comment_data?.user?.username ?? '');
   store = inject(CommentStore);
@@ -38,6 +39,20 @@ export class FormComponent {
       },
       replies: [],
     };
+    this.reply_data = {
+      id: 0,
+      content: '',
+      createdAt: '',
+      score: 0,
+      replyingTo: '',
+      user: {
+        image: {
+          png: '',
+          webp: '',
+        },
+        username: '',
+      },
+    };
     effect(() => {
       const username = this.replyingTo();
       if (username) {
@@ -48,7 +63,7 @@ export class FormComponent {
   }
 
   addComments() {
-     const comment = this.comment().trim();
+    const comment = this.comment().trim();
     if (!comment) return;
 
     if (this.replyingTo()) {
@@ -58,7 +73,7 @@ export class FormComponent {
       this.store.addReply(comment_id,commentWithReply,replyingTo,this.user);
       // this.commentService.addComment(reply);
     } else {
-      this.store.addComment(comment,this.user)
+      this.store.addComment(comment,this.user);
       // this.commentService.addComment(newComment);
     }
     this.store.hideReplyForm();

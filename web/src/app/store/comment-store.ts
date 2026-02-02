@@ -60,9 +60,9 @@ export class CommentStore {
   hideReplyForm() {
     this.activeReplyId.set(null);
   }
-//   removeComment(id: string) {
-//     this.Comments.update((currentComments) => currentComments.filter((Comment) => Comment.id !== id));
-//   }
+  deleteComment(id: number | undefined) {
+    this.comments.update((currentComment) => currentComment.filter((comment) => comment.id !== id));
+  }
 
 //   updateQuantity(id: string, quantity: number) {
 //     if (quantity <= 0) {

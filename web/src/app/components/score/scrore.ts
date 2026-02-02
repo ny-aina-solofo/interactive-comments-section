@@ -4,7 +4,7 @@ import { Component, Input, signal } from '@angular/core';
   selector: 'score',
   imports: [],
   template: `
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-4 items-center ">
         <div (click)="upVote()">
             <img
                 src="assets/icon-plus.svg"

@@ -1,14 +1,15 @@
 import { Component,inject,Input, signal } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
 import { ScoreComponent } from '../score/scrore';
 import { Comment } from '../../models/comments';
 import { FormComponent } from '../form/form';
 import { CommentStore } from '../../store/comment-store';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DeleteDialogComponent } from '../dialog/dialog';
 
 @Component({
   selector: 'comment-item',
-  imports: [ScoreComponent,FormComponent,MatCardModule,MatButtonModule],
+  imports: [ScoreComponent,FormComponent,ButtonModule,CardModule,DeleteDialogComponent],
   templateUrl: './comment-item.html',
 })
 

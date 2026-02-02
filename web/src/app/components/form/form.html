@@ -1,9 +1,8 @@
 <main >
-    <mat-card
-        appearance="outlined"
-        class="bg-white !border-none"
+    <p-card
+        class="!bg-white !text-grey-800 !border-none !rounded-xl !shadow-none"
     >   
-        <div class="flex items-start gap-4 p-4 rounded-xl ">
+        <div class="flex items-start gap-4">
             <img
                 src="assets/avatars/image-juliusomo.png"
                 alt="avatar"
@@ -14,18 +13,17 @@
                 rows="3"
                 #textarea
                 [placeholder]="replyingTo()? '' : 'Add a comment...'"
-                class="flex-1 resize-none border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                class="flex-1 resize-none border border-gray-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-600"
                 [(ngModel)]="comment" 
             ></textarea>
     
             <button
-                mat-flat-button
-                class="!h-10 !px-6 !rounded-lg !bg-purple-600"
+               pButton
+               class="!h-10 !px-6 !rounded-lg !bg-purple-600 !text-white font-bold !border-none"
                 (click)="addComments()"
             >
                 SEND
             </button>
         </div>
-    </mat-card>
-
+    </p-card>
 </main>
