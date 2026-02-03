@@ -25,6 +25,9 @@
                         />
     
                         <span class="font-semibold text-grey-800">{{reply_data.user.username}} </span>
+                        @if (this.user.username === reply_data.user.username) {
+                            <p-badge value="you" severity="info" class="!text-white !bg-purple-600" />
+                        }
                         <span class="font-normal  text-grey-500">{{reply_data.createdAt}} </span>
                     </div>
                     <div class="flex flex-row gap-8">

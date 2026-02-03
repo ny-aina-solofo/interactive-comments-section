@@ -22,8 +22,10 @@
                             [alt]="comment_data.user.username"
                             class="w-8 h-8 rounded-full"
                         />
-    
                         <span class="font-semibold text-grey-800">{{comment_data.user.username}} </span>
+                        @if (this.user.username === comment_data.user.username) {
+                            <p-badge value="you" severity="info" class="!text-white !bg-purple-600" />
+                        }
                         <span class="font-normal text-grey-500">{{comment_data.createdAt}} </span>
                     </div>
                     <div class="flex flex-row gap-8">

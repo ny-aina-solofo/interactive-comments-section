@@ -3,6 +3,7 @@ import {Comment} from '../models/comments';
 import { Reply } from '../models/reply';
 import { InteractiveCommentsService } from '../services/comment.service';
 import { User } from '../models/user';
+import { getAgoTime } from '../utils/get-time';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class CommentStore {
     const newComment = {
       id: Date.now(),
       content: comment,
-      createdAt: new Date().toISOString(),
+      createdAt: getAgoTime(Date.now()),
       score: 0,
       user: user,
       replies:[]
@@ -39,7 +40,7 @@ export class CommentStore {
     const newReply = {
       id: Date.now(),
       content: commentWithReply,
-      createdAt: new Date().toISOString(),
+      createdAt: getAgoTime(Date.now()),
       score: 0,
       replyingTo : replyingTo,
       user: user,

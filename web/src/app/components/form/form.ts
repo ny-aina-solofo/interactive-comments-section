@@ -23,7 +23,7 @@ export class FormComponent {
   user: User;
   comment = signal('');
 
-  constructor(private commentService: InteractiveCommentsService) {
+  constructor(commentService: InteractiveCommentsService) {
     this.user = commentService.getUser();
     effect(() => {
       const username = this.data?.username;

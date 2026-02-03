@@ -7,18 +7,31 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DeleteDialogComponent } from '../dialog/delete-dialog';
 import { EditDialogComponent } from '../dialog/edit-dialog';
+import { User } from '../../models/user';
+import { InteractiveCommentsService } from '../../services/comment.service';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'comment-item',
-  imports: [ScoreComponent,FormComponent,ButtonModule,CardModule,DeleteDialogComponent,EditDialogComponent],
+  imports: [
+    ScoreComponent,
+    FormComponent,
+    ButtonModule,
+    CardModule,
+    DeleteDialogComponent,
+    EditDialogComponent,
+    BadgeModule
+  ],
   templateUrl: './comment-item.html',
 })
 
 export class CommentItemComponent {
   @Input() comment_data:Comment;
   store = inject(CommentStore);
-  
-  constructor() {
+  user: User;
+    
+  constructor(commentService: InteractiveCommentsService) {
+    this.user = commentService.getUser();
     this.comment_data = {
       id: 0,
       content: '',
