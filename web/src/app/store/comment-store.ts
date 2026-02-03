@@ -103,6 +103,27 @@ export class CommentStore {
     );
   }
 
+  updateCommentScore(comment_id:number | undefined, newScore:number){
+    this.comments.update((currentComment) =>
+      currentComment.map((comment => (comment.id === comment_id ? {...comment, score: newScore} : comment)),
+    ));
+  }
+
+  updateReplyScore(comment_id:number, reply_id:number, newScore:number){
+    this.comments.update((comments) =>
+      comments.map((comment) =>
+        comment.id === comment_id
+          ? {
+              ...comment,
+              replies: comment.replies.map(
+                (reply) => reply.id === reply_id ?
+                {...reply, score : newScore} : reply
+              ),
+            }
+          : comment
+      )
+    );
+  }
 
   
 }

@@ -7,7 +7,12 @@
                 class="bg-grey-100 rounded-lg px-3 py-3 text-purple-600 font-semibold h-25"
                 id="votes"
             >
-                <score [score]="reply_data.score"/>
+                <score [score]="reply_data.score" [data]="{
+                    type: 'reply',
+                    comment_id: comment_id,
+                    reply_id: reply_data.id,
+                    username: reply_data.user.username
+                }"/>
             </div>
             
             <div class="flex-1 space-y-2" id="comments">
