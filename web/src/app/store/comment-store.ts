@@ -24,27 +24,11 @@ export class CommentStore {
     this.comments.set(this.comment_data);
   }
 
-  addComment(comment:string, user:User) {
-    const newComment = {
-      id: Date.now(),
-      content: comment,
-      createdAt: getAgoTime(Date.now()),
-      score: 0,
-      user: user,
-      replies:[]
-    };
+  addComment(newComment:Comment) {
     this.comments.update((currentComments) => [...currentComments,newComment]);
   }
 
-  addReply(comment_id:number, commentWithReply:string, replyingTo:string, user:User){
-    const newReply = {
-      id: Date.now(),
-      content: commentWithReply,
-      createdAt: getAgoTime(Date.now()),
-      score: 0,
-      replyingTo : replyingTo,
-      user: user,
-    };  
+  addReply(comment_id:number, newReply:Reply){  
     this.comments.update((currentComment) =>
       currentComment.map((comment) =>
         comment.id === comment_id

@@ -5,6 +5,7 @@ import { CommentStore } from '../../store/comment-store';
 import { Comment } from '../../models/comments';
 import { FormsModule } from '@angular/forms';
 import { Reply } from '../../models/reply';
+import { InteractiveCommentsService } from '../../services/comment.service';
 
 type EditData =
   | { type: 'comment'; comment_id: number; content:string; username: string }
@@ -14,7 +15,7 @@ type EditData =
     selector:'edit-dialog',
     template: `
         <div>
-            <div 
+            <button 
                 class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer"
                 (click)="showDialog()"
             >
@@ -25,7 +26,7 @@ type EditData =
                     class="size-4 "
                 />
                 Edit
-            </div>
+            </button>
             <p-dialog 
                 [modal]="true" [(visible)]="visible"   [closable]="false" 
                 [style]="{ 
@@ -53,15 +54,15 @@ type EditData =
                     ></textarea>
                     <div class="flex gap-4">
                         <button
-                            pButton
-                            class="!w-full !h-10 !px-6 !rounded-lg !bg-grey-500 !text-white font-bold !border-none"
+                            class="w-full h-10 px-6 rounded-lg cursor-pointer
+                                bg-grey-500 text-white font-bold border-none hover:bg-grey-500/90"
                             (click)="visible = false" 
                         >
                             CANCEL
                         </button>
                         <button
-                            pButton
-                            class="!w-full !h-10 !px-6 !rounded-lg !bg-purple-600 !text-white font-bold !border-none"
+                            class="w-full h-10 px-6 rounded-lg bg-purple-600 cursor-pointer 
+                                text-white font-bold border-none hover:bg-purple-600/90"
                             (click)="handleEditComment()" 
                         >
                             EDIT
@@ -80,6 +81,8 @@ export class EditDialogComponent {
     visible: boolean = false;
     store = inject(CommentStore);
 
+    constructor(private commentService: InteractiveCommentsService) {}
+    
     showDialog() {
         this.comment = this.data?.content ?? '';
         this.visible = true;
@@ -88,9 +91,11 @@ export class EditDialogComponent {
         const comment = this.comment.trim();
         if (!comment) return;
         if (this.data?.type === "reply") {
-            this.store.editReply(this.data?.comment_id, this.data?.reply_id, comment );    
+            this.store.editReply(this.data?.comment_id, this.data?.reply_id, comment );
+            this.commentService.editReply(this.data?.comment_id, this.data?.reply_id, comment);    
         } else {
             this.store.editComment(this.data?.comment_id, comment);
+            this.commentService.editComment(this.data?.comment_id, comment);
         }
         this.visible = false;
         this.comment = "";

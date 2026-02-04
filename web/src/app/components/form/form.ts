@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { CommentStore } from '../../store/comment-store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { getAgoTime } from '../../utils/get-time';
 
 type FormData =
   | { type: 'reply'; comment_id: number; username: string }
@@ -23,7 +24,7 @@ export class FormComponent {
   user: User;
   comment = signal('');
 
-  constructor(commentService: InteractiveCommentsService) {
+  constructor(private commentService: InteractiveCommentsService) {
     this.user = commentService.getUser();
     effect(() => {
       const username = this.data?.username;
@@ -39,16 +40,33 @@ export class FormComponent {
     if (!comment) return;
 
     if (this.data) {
-      const comment_id = this.data.comment_id;
-      const commentWithReply = comment.replace(`@${this.data.username} `, '')
-      const replyingTo =  this.data.username;
-      this.store.addReply(comment_id,commentWithReply,replyingTo,this.user);
-      // this.commentService.addComment(reply);  
+      const newReply = {
+        id: Date.now(),
+        content: comment.replace(`@${this.data.username} `, ''),
+        createdAt: getAgoTime(Date.now()),
+        score: 0,
+        replyingTo : this.data.username,
+        user: this.user,
+      };  
+      this.store.addReply(this.data.comment_id, newReply);
+      this.commentService.addReply(this.data.comment_id, newReply);  
     } else {
-      this.store.addComment(comment,this.user);
-      // this.commentService.addComment(newComment);
+      const newComment = {
+        id: Date.now(),
+        content: comment,
+        createdAt: getAgoTime(Date.now()),
+        score: 0,
+        user: this.user,
+        replies:[]
+      };
+      this.store.addComment(newComment);
+      this.commentService.addComment(newComment);
     }
     this.store.hideReplyForm();
     this.comment.set('');
+  }
+
+  handleCancel() {
+    this.store.hideReplyForm();
   }
 }

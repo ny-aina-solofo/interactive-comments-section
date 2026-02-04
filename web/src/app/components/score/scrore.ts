@@ -1,5 +1,6 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { CommentStore } from '../../store/comment-store';
+import { InteractiveCommentsService } from '../../services/comment.service';
 
 type ScoreData =
   | { type: 'comment'; comment_id: number; username: string }
@@ -9,7 +10,7 @@ type ScoreData =
   selector: 'score',
   imports: [],
   template: `
-    <div class="flex flex-col gap-4 items-center ">
+    <div class="flex flex-col gap-4 bg-grey-100 rounded-lg px-3 py-3 text-purple-600 font-semibold h-25 items-center ">
         <div (click)="upVote()">
             <img
                 src="assets/icon-plus.svg"
@@ -35,14 +36,17 @@ export class ScoreComponent {
     @Input() data:ScoreData | undefined;
     store = inject(CommentStore);
 
-
+    constructor(private commentService: InteractiveCommentsService) {}
+    
     upVote() {
         if (this.score >= 20) return;
         this.score += 1;
         if (this.data?.type === "reply") {
             this.store.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score );    
+            this.commentService.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score);
         } else {
             this.store.updateCommentScore(this.data?.comment_id, this.score);
+            this.commentService.updateCommentScore(this.data?.comment_id, this.score);    
         }
     }
 
@@ -51,8 +55,10 @@ export class ScoreComponent {
         this.score -= 1;
         if (this.data?.type === "reply") {
             this.store.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score );    
+            this.commentService.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score);
         } else {
             this.store.updateCommentScore(this.data?.comment_id, this.score);
+            this.commentService.updateCommentScore(this.data?.comment_id, this.score);    
         }
     }
 }

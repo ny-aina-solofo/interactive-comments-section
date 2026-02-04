@@ -1,34 +1,47 @@
-<main class="" id="comments-item-container">
-    <p-card
-        class="!bg-white !border-none !rounded-xl !shadow-none"
-    >
-        <div class="flex gap-4">
-            <div
-                class="bg-grey-100 rounded-lg px-3 py-3 text-purple-600 font-semibold h-25"
-                id="votes"
-            >
-                <score [score]="comment_data.score" [data]="{
+<main id="comments-item-container">
+    <p-card class="!bg-white !border-none !rounded-xl !shadow-none">
+        <div class="flex flex-col md:flex-row gap-4">
+            <!-- Score desktop -->
+            <div class="hidden md:flex">
+                <score
+                [score]="comment_data.score"
+                [data]="{
                     type: 'comment',
                     comment_id: comment_data.id,
                     username: comment_data.user.username
-                }" />
+                }"
+                />
             </div>
-            
-            <div class="flex-1 space-y-2" id="comments">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
+
+            <!-- Content -->
+            <div class="flex-1 space-y-4">
+                <!-- Header -->
+                <div class="flex items-center justify-between flex-wrap gap-3">
+                    <div class="flex items-center gap-3 flex-wrap">
                         <img
-                            [src]="'assets/' + comment_data.user.image.png"
-                            [alt]="comment_data.user.username"
-                            class="w-8 h-8 rounded-full"
+                        [src]="'assets/' + comment_data.user.image.png"
+                        [alt]="comment_data.user.username"
+                        class="w-8 h-8 rounded-full"
                         />
-                        <span class="font-semibold text-grey-800">{{comment_data.user.username}} </span>
+            
+                        <span class="font-semibold text-grey-800">
+                        {{ comment_data.user.username }}
+                        </span>
+            
                         @if (this.user.username === comment_data.user.username) {
-                            <p-badge value="you" severity="info" class="!text-white !bg-purple-600" />
+                        <p-badge
+                            value="you"
+                            severity="info"
+                            class="!text-white !bg-purple-600"
+                        />
                         }
-                        <span class="font-normal text-grey-500">{{comment_data.createdAt}} </span>
+            
+                        <span class="text-grey-500 ">
+                        {{ comment_data.createdAt }}
+                        </span>
                     </div>
-                    <div class="flex flex-row gap-8">
+                    <!-- Desktop actions -->
+                    <div class="hidden md:flex  gap-6">
                         <delete-dialog [data]="{
                             type: 'comment',
                             comment_id: comment_data.id,
@@ -40,33 +53,68 @@
                             content:comment_data.content,
                             username: comment_data.user.username
                         }" />
-                        <div 
-                            class="flex gap-2 text-sm font-bold text-purple-600 cursor-pointer" 
-                            (click)="handleShowForm()"    
+                        <button
+                        class="flex gap-2 font-bold text-purple-600 text-sm "
+                        (click)="handleShowForm()"
                         >
-                            <img
-                                src="assets/icon-reply.svg"
-                                alt="icon-reply"
-                                class="size-4"
-                            />
-                            Reply
-                        </div>
+                        <img src="assets/icon-reply.svg" class="size-4" />
+                        Reply
+                        </button>
                     </div>
                 </div>
-    
-                <p class="text-grey-500 font-normal leading-relaxed">
-                    {{comment_data.content}} 
+
+                <!-- Text -->
+                <p class="text-grey-500 leading-relaxed">
+                    {{ comment_data.content }}
                 </p>
+
+                <!-- Mobile footer (EXACT image layout) -->
+                <div class="flex md:hidden items-center justify-between">
+
+                    <!-- Score mobile -->
+                    <score
+                        [score]="comment_data.score"
+                        [data]="{
+                        type: 'comment',
+                        comment_id: comment_data.id,
+                        username: comment_data.user.username
+                        }"
+                    />
+
+                    <!-- Actions mobile -->
+                    <div class="flex items-center gap-4 text-purple-600 font-bold text-sm">
+                        <delete-dialog [data]="{
+                            type: 'comment',
+                            comment_id: comment_data.id,
+                            username: comment_data.user.username
+                        }"/>
+                        <edit-dialog [data]="{
+                            type: 'comment',
+                            comment_id: comment_data.id,
+                            content:comment_data.content,
+                            username: comment_data.user.username
+                        }" />
+                        <button
+                            class="flex gap-2 items-center"
+                            (click)="handleShowForm()"
+                        >
+                            <img src="assets/icon-reply.svg" class="size-4" />
+                            Reply
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </p-card>
+
+    <!-- Reply form -->
     @if (store.activeReplyIdState() === comment_data.id) {
         <div class="mt-4">
             <app-form [data]="{
                 type: 'reply',
                 comment_id: comment_data.id,
                 username: comment_data.user.username
-            }"/>
+            }" />
         </div>
     }
 </main>
