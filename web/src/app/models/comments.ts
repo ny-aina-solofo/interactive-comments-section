@@ -2,10 +2,10 @@ import { Reply }from './reply';
 import { User } from './user';
 
 export interface Comment  {
-  id: number;
+  comment_id: number;
   content: string;
-  createdAt: string;
+  created_at: string;
   score: number;
-  user: User;
+  user_data: User;
   replies: Reply[];
 }

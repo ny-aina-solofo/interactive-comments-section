@@ -12,7 +12,7 @@ const USER_STORAGE_KEY = "user-comments";
 })
 
   
-export class InteractiveCommentsService {
+export class InteractiveComments {
   
   comments_data :Comment[];
   user_data: User;
@@ -42,7 +42,7 @@ export class InteractiveCommentsService {
   addReply(comment_id:number, newReply:Reply) {
     // const comments = this.getCommentList();
     const updated =  this.comments_data.map((comment) =>
-      comment.id === comment_id
+      comment.comment_id === comment_id
         ? { ...comment, replies: [...comment.replies, newReply] }
         : comment
       );
@@ -51,18 +51,18 @@ export class InteractiveCommentsService {
 
   deleteComment(comment_id:number | undefined) {
       // const comments = this.getCommentList();
-      const updated = this.comments_data.filter(comment => comment.id !== comment_id);
+      const updated = this.comments_data.filter(comment => comment.comment_id !== comment_id);
       localStorage.setItem(COMMENT_STORAGE_KEY, JSON.stringify(updated));
   }
 
   deleteReply(comment_id: number, reply_id: number) {
     // const comments = this.getCommentList();
     const updated =  this.comments_data.map((comment) =>
-      comment.id === comment_id
+      comment.comment_id === comment_id
         ? {
             ...comment,
             replies: comment.replies.filter(
-              (reply) => reply.id !== reply_id
+              (reply) => reply.reply_id !== reply_id
             ),
           }
         : comment
@@ -73,18 +73,18 @@ export class InteractiveCommentsService {
 
   editComment(id: number | undefined, newContent: string) {
     // const comments = this.getCommentList();
-    const updated = this.comments_data.map((comment) => comment.id === id ? {...comment, content : newContent} : comment);
+    const updated = this.comments_data.map((comment) => comment.comment_id === id ? {...comment, content : newContent} : comment);
     localStorage.setItem(COMMENT_STORAGE_KEY, JSON.stringify(updated));
   }
 
   editReply(comment_id: number, reply_id: number, newContent: string ) {
     // const comments = this.getCommentList();
     const updated = this.comments_data.map((comment) =>
-      comment.id === comment_id
+      comment.comment_id === comment_id
         ? {
             ...comment,
             replies: comment.replies.map(
-              (reply) => reply.id === reply_id ?
+              (reply) => reply.reply_id === reply_id ?
               {...reply, content : newContent} : reply
             ),
           }
@@ -95,18 +95,18 @@ export class InteractiveCommentsService {
 
   updateCommentScore(comment_id:number | undefined, newScore:number){
     // const comments = this.getCommentList();
-    const updated =  this.comments_data.map((comment) => comment.id === comment_id ? {...comment, score: newScore} : comment);
+    const updated =  this.comments_data.map((comment) => comment.comment_id === comment_id ? {...comment, score: newScore} : comment);
     localStorage.setItem(COMMENT_STORAGE_KEY, JSON.stringify(updated));
   }
 
   updateReplyScore(comment_id:number, reply_id:number, newScore:number){
     // const comments = this.getCommentList();
     const updated =  this.comments_data.map((comment) =>
-      comment.id === comment_id
+      comment.comment_id === comment_id
         ? {
             ...comment,
             replies: comment.replies.map(
-              (reply) => reply.id === reply_id ?
+              (reply) => reply.reply_id === reply_id ?
               {...reply, score : newScore} : reply
             ),
           }

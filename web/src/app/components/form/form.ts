@@ -21,11 +21,11 @@ export class FormComponent {
   // @Input() reply_data: Reply  ;
   @ViewChild('textarea') textarea?: ElementRef<HTMLTextAreaElement>;
   store = inject(CommentStore);
-  user: User;
+  user: User[];
   comment = signal('');
 
   constructor(private commentService: InteractiveCommentsService) {
-    this.user = commentService.getUser();
+    this.user = this.store.userItems();
     effect(() => {
       const username = this.data?.username;
       if (username) {
@@ -41,26 +41,27 @@ export class FormComponent {
 
     if (this.data) {
       const newReply = {
-        id: Date.now(),
+        reply_id: Date.now(),
         content: comment.replace(`@${this.data.username} `, ''),
-        createdAt: getAgoTime(Date.now()),
+        created_at: getAgoTime(Date.now()),
         score: 0,
-        replyingTo : this.data.username,
-        user: this.user,
+        replyingto : this.data.username,
+        user_data: this.user,
+        comment_id: this.data.comment_id
       };  
-      this.store.addReply(this.data.comment_id, newReply);
-      this.commentService.addReply(this.data.comment_id, newReply);  
+      // this.store.addReply(this.data.comment_id, newReply);
+      // this.commentService.addReply(this.data.comment_id, newReply);  
     } else {
       const newComment = {
-        id: Date.now(),
+        comment_id: Date.now(),
         content: comment,
-        createdAt: getAgoTime(Date.now()),
+        created_at: getAgoTime(Date.now()),
         score: 0,
-        user: this.user,
+        user_data: this.user,
         replies:[]
       };
-      this.store.addComment(newComment);
-      this.commentService.addComment(newComment);
+      // this.store.addComment(newComment);
+      // this.commentService.addComment(newComment);
     }
     this.store.hideReplyForm();
     this.comment.set('');

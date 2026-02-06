@@ -28,16 +28,15 @@ import { BadgeModule } from 'primeng/badge';
 export class CommentItemComponent {
   @Input() comment_data:Comment;
   store = inject(CommentStore);
-  user: User;
     
   constructor(commentService: InteractiveCommentsService) {
-    this.user = commentService.getUser();
+
     this.comment_data = {
-      id: 0,
+      comment_id: 0,
       content: '',
-      createdAt: '',
+      created_at: '',
       score: 0,
-      user: {
+      user_data: {
         image: {
           png: '',
           webp: '',
@@ -49,6 +48,6 @@ export class CommentItemComponent {
   }
 
   handleShowForm(){
-    this.store.showReplyForm(this.comment_data.id);
+    this.store.showReplyForm(this.comment_data.comment_id);
   }
 }

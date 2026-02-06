@@ -4,12 +4,12 @@
             <!-- Score desktop -->
             <div class="hidden md:flex">
                 <score
-                [score]="comment_data.score"
-                [data]="{
-                    type: 'comment',
-                    comment_id: comment_data.id,
-                    username: comment_data.user.username
-                }"
+                    [score]="comment_data.score"
+                    [data]="{
+                        type: 'comment',
+                        comment_id: comment_data.comment_id,
+                        username: comment_data.user_data.username
+                    }"
                 />
             </div>
 
@@ -19,39 +19,39 @@
                 <div class="flex items-center justify-between flex-wrap gap-3">
                     <div class="flex items-center gap-3 flex-wrap">
                         <img
-                        [src]="'assets/' + comment_data.user.image.png"
-                        [alt]="comment_data.user.username"
+                        [src]="'assets/' + comment_data.user_data.image.png"
+                        [alt]="comment_data.user_data.username"
                         class="w-8 h-8 rounded-full"
                         />
             
                         <span class="font-semibold text-grey-800">
-                        {{ comment_data.user.username }}
+                        {{ comment_data.user_data.username }}
                         </span>
             
-                        @if (this.user.username === comment_data.user.username) {
-                        <p-badge
-                            value="you"
-                            severity="info"
-                            class="!text-white !bg-purple-600"
-                        />
-                        }
+                        <!-- @if (this.allUsers.username === comment_data.user_data.username) {
+                            <p-badge
+                                value="you"
+                                severity="info"
+                                class="!text-white !bg-purple-600"
+                            />
+                        } -->
             
                         <span class="text-grey-500 ">
-                        {{ comment_data.createdAt }}
+                            {{ comment_data.created_at }}
                         </span>
                     </div>
                     <!-- Desktop actions -->
                     <div class="hidden md:flex  gap-6">
                         <delete-dialog [data]="{
                             type: 'comment',
-                            comment_id: comment_data.id,
-                            username: comment_data.user.username
+                            comment_id: comment_data.comment_id,
+                            username: comment_data.user_data.username
                         }"/>
                         <edit-dialog [data]="{
                             type: 'comment',
-                            comment_id: comment_data.id,
+                            comment_id: comment_data.comment_id,
                             content:comment_data.content,
-                            username: comment_data.user.username
+                            username: comment_data.user_data.username
                         }" />
                         <button
                         class="flex gap-2 font-bold text-purple-600 text-sm "
@@ -76,8 +76,8 @@
                         [score]="comment_data.score"
                         [data]="{
                         type: 'comment',
-                        comment_id: comment_data.id,
-                        username: comment_data.user.username
+                        comment_id: comment_data.comment_id,
+                        username: comment_data.user_data.username
                         }"
                     />
 
@@ -85,14 +85,14 @@
                     <div class="flex items-center gap-4 text-purple-600 font-bold text-sm">
                         <delete-dialog [data]="{
                             type: 'comment',
-                            comment_id: comment_data.id,
-                            username: comment_data.user.username
+                            comment_id: comment_data.comment_id,
+                            username: comment_data.user_data.username
                         }"/>
                         <edit-dialog [data]="{
                             type: 'comment',
-                            comment_id: comment_data.id,
+                            comment_id: comment_data.comment_id,
                             content:comment_data.content,
-                            username: comment_data.user.username
+                            username: comment_data.user_data.username
                         }" />
                         <button
                             class="flex gap-2 items-center"
@@ -108,12 +108,12 @@
     </p-card>
 
     <!-- Reply form -->
-    @if (store.activeReplyIdState() === comment_data.id) {
+    @if (store.activeReplyIdState() === comment_data.comment_id) {
         <div class="mt-4">
             <app-form [data]="{
                 type: 'reply',
-                comment_id: comment_data.id,
-                username: comment_data.user.username
+                comment_id: comment_data.comment_id,
+                username: comment_data.user_data.username
             }" />
         </div>
     }
