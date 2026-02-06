@@ -1,36 +1,24 @@
 from pydantic import BaseModel
+from typing import List
+from app.api.v1.schema.user import UserData
 
-
-class UserImage(BaseModel):
-    png: str
-    webp: str
-
-class UserData(BaseModel):
-    image: UserImage
-    username: str
-
-class User(BaseModel):
-    user_id  = int    
-    username = str
-    password = str
-    avatar = UserImage
+class ReplyLisResponse(BaseModel):
+    reply_id: int
+    content: str 
+    created_at: str
+    replyingto: str
+    score: int
+    user_data : UserData
+    comment_id: int
 
 class CommentLisResponse(BaseModel):
     comment_id: int
     content: str 
-    createdAt: str
+    created_at: str
     score: int
     user_data : UserData
+    replies : List[ReplyLisResponse]
 
-
-class ReplyLisResponse(BaseModel):
-    comment_id: int
-    content: str 
-    createdAt: str
-    replyingTo: str
-    score: int
-    user_data : UserData
-    comment_id: int
 
 
 

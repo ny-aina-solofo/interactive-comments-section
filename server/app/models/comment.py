@@ -19,7 +19,7 @@ class Comment(Base):
 
     comment_id  = Column(Integer, primary_key=True, index=True)
     content = Column(Text, nullable=False)
-    createdAt = Column(String, nullable=False)
+    created_at = Column(String, nullable=False)
     score = Column(Integer, nullable=False, default=0)
     user_data = Column(JSON, nullable=False)
     replies = relationship("Reply", back_populates="comments")
@@ -31,8 +31,8 @@ class Reply(Base):
 
     reply_id = Column(Integer, primary_key=True, index=True)
     content = Column(Text, nullable=False)
-    createdAt = Column(String, nullable=False)
-    replyingTo  = Column(String, nullable=False)
+    created_at = Column(String, nullable=False)
+    replyingto  = Column(String, nullable=False)
     score = Column(Integer, nullable=False, default=0)
     user_data = Column(JSON, nullable=False)
     comment_id = Column(Integer, ForeignKey("comment.comments.comment_id"))
