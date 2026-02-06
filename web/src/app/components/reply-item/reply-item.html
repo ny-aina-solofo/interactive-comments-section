@@ -9,8 +9,8 @@
                     [data]="{
                         type: 'reply',
                         comment_id: comment_id,
-                        reply_id: reply_data.id,
-                        username: reply_data.user.username
+                        reply_id: reply_data.reply_id,
+                        username: reply_data.user_data.username
                     }"
                 />
             </div>
@@ -21,25 +21,25 @@
                 <div class="flex items-center justify-between flex-wrap gap-3">
                     <div class="flex items-center gap-3 flex-wrap">
                         <img
-                            [src]="'assets/' + reply_data.user.image.png"
-                            [alt]="reply_data.user.username"
+                            [src]="'assets/' + reply_data.user_data.image.png"
+                            [alt]="reply_data.user_data.username"
                             class="w-8 h-8 rounded-full"
                         />
 
                         <span class="font-semibold text-grey-800">
-                            {{ reply_data.user.username }}
+                            {{ reply_data.user_data.username }}
                         </span>
 
-                        @if (this.user.username === reply_data.user.username) {
+                        <!-- @if (this.user.username === reply_data.user_data.username) {
                             <p-badge
                                 value="you"
                                 severity="info"
                                 class="!text-white !bg-purple-600"
                             />
-                        }
+                        } -->
 
                         <span class="text-grey-500 ">
-                            {{ reply_data.createdAt }}
+                            {{ reply_data.created_at }}
                         </span>
                     </div>
 
@@ -48,16 +48,16 @@
                         <delete-dialog [data]="{
                             type: 'reply',
                             comment_id: comment_id,
-                            reply_id: reply_data.id,
-                            username: reply_data.user.username
+                            reply_id: reply_data.reply_id,
+                            username: reply_data.user_data.username
                         }" />
 
                         <edit-dialog [data]="{
                             type: 'reply',
                             comment_id: comment_id,
-                            reply_id: reply_data.id,
+                            reply_id: reply_data.reply_id,
                             content: reply_data.content,
-                            username: reply_data.user.username
+                            username: reply_data.user_data.username
                         }" />
 
                         <button
@@ -73,7 +73,7 @@
                 <!-- Text -->
                 <p class="text-grey-500 leading-relaxed">
                     <span class="text-purple-600 font-semibold">
-                        {{ reply_data.replyingTo }}
+                        {{ reply_data.replyingto }}
                     </span>
                     {{ reply_data.content }}
                 </p>
@@ -86,8 +86,8 @@
                         [data]="{
                         type: 'reply',
                         comment_id: comment_id,
-                        reply_id: reply_data.id,
-                        username: reply_data.user.username
+                        reply_id: reply_data.reply_id,
+                        username: reply_data.user_data.username
                         }"
                     />
 
@@ -96,16 +96,16 @@
                         <delete-dialog [data]="{
                             type: 'reply',
                             comment_id: comment_id,
-                            reply_id: reply_data.id,
-                            username: reply_data.user.username
+                            reply_id: reply_data.reply_id,
+                            username: reply_data.user_data.username
                         }" />
 
                         <edit-dialog [data]="{
                             type: 'reply',
                             comment_id: comment_id,
-                            reply_id: reply_data.id,
+                            reply_id: reply_data.reply_id,
                             content: reply_data.content,
-                            username: reply_data.user.username
+                            username: reply_data.user_data.username
                         }" />
 
                         <button
@@ -122,12 +122,12 @@
         </div>
     </p-card>
 
-    @if (store.activeReplyIdState() === reply_data.id) {
+    @if (store.activeReplyIdState() === reply_data.reply_id) {
         <div class="mt-4">
             <app-form [data]="{
                 type: 'reply',
                 comment_id: comment_id,
-                username: reply_data.user.username
+                username: reply_data.user_data.username
             }" />
         </div>
     }

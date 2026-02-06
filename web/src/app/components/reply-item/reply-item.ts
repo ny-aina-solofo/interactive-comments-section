@@ -29,26 +29,27 @@ export class ReplyCommentComponent {
   @Input() reply_data:Reply;
   @Input() comment_id:number = 0;
   store = inject(CommentStore);
-  user: User;
+  // user: User;
     
   constructor(commentService: InteractiveCommentsService) {
-    this.user = commentService.getUser();
+    // this.user = commentService.getUser();
     this.reply_data = {
-      id: 0,
+      reply_id: 0,
       content: '',
-      createdAt: '',
+      created_at: '',
       score: 0,
-      replyingTo: '',
-      user: {
+      replyingto: '',
+      user_data: {
         image: {
           png: '',
           webp: '',
         },
         username: '',
       },
+      comment_id:0
     };
   }
   handleShowForm(){
-    this.store.showReplyForm(this.reply_data.id);
+    this.store.showReplyForm(this.reply_data.reply_id);
   }
 }

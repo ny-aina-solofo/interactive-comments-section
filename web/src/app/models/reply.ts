@@ -1,10 +1,11 @@
 import { User } from './user';
 
 export interface Reply  {
-  id: number;
+  reply_id: number;
   content: string;
-  createdAt: string;
+  created_at: string;
   score: number;
-  replyingTo: string;
-  user: User;
+  replyingto: string;
+  user_data: User;
+  comment_id:number;
 }
