@@ -28,13 +28,13 @@
                         {{ comment_data.user_data.username }}
                         </span>
             
-                        <!-- @if (this.allUsers.username === comment_data.user_data.username) {
+                        @if (this.user.username === comment_data.user_data.username) {
                             <p-badge
                                 value="you"
                                 severity="info"
                                 class="!text-white !bg-purple-600"
                             />
-                        } -->
+                        }
             
                         <span class="text-grey-500 ">
                             {{ comment_data.created_at }}
@@ -49,17 +49,17 @@
                         }"/>
                         <edit-dialog [data]="{
                             type: 'comment',
-                            comment_id: comment_data.comment_id,
-                            content:comment_data.content,
-                            username: comment_data.user_data.username
+                                comment_id: comment_data.comment_id,
+                                content:comment_data.content,
+                                username: comment_data.user_data.username
                         }" />
                         <button
-                        class="flex gap-2 font-bold text-purple-600 text-sm "
-                        (click)="handleShowForm()"
+                            class="flex gap-2 font-bold text-purple-600 text-sm cursor-pointer "
+                            (click)="handleShowForm()"
                         >
-                        <img src="assets/icon-reply.svg" class="size-4" />
-                        Reply
-                        </button>
+                            <img src="assets/icon-reply.svg" class="size-4" />
+                                Reply
+                            </button>
                     </div>
                 </div>
 
@@ -75,9 +75,9 @@
                     <score
                         [score]="comment_data.score"
                         [data]="{
-                        type: 'comment',
-                        comment_id: comment_data.comment_id,
-                        username: comment_data.user_data.username
+                            type: 'comment',
+                            comment_id: comment_data.comment_id,
+                            username: comment_data.user_data.username
                         }"
                     />
 
@@ -107,8 +107,10 @@
         </div>
     </p-card>
 
-    <!-- Reply form -->
-    @if (store.activeReplyIdState() === comment_data.comment_id) {
+    @if (
+        store.activeReplyState()?.type === 'comment' && 
+        store.activeReplyToCommentId() === comment_data.comment_id
+    ) {
         <div class="mt-4">
             <app-form [data]="{
                 type: 'reply',

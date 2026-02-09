@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { Comment} from '../models/comments';
 import { User } from '../models/user';
 import { Reply } from '../models/reply';
+import * as data from './data.json';
 
+const USER_STORAGE_KEY = "user-comments";
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +16,19 @@ import { Reply } from '../models/reply';
 export class InteractiveCommentsService {
   
   private url:string = "http://127.0.0.1:3000/comment-api";
+  user_data: User;
 
-  constructor(private http:HttpClient) {};
+  constructor(private http:HttpClient) {
+    const storedUser = localStorage.getItem(USER_STORAGE_KEY);
+    this.user_data = storedUser ? JSON.parse(storedUser) : data.currentUser;
 
-  getUser():Observable<User[]> {
-    return this.http.get<User[]>(this.url + '/get-user'); 
+  };
+
+  // getUser():Observable<User[]> {
+  //   return this.http.get<User[]>(this.url + '/get-user'); 
+  // }
+  getUser() {
+    return this.user_data;
   }
 
   getCommentList():Observable<Comment[]> {
@@ -26,10 +36,22 @@ export class InteractiveCommentsService {
   }
 
 
-  addComment(newComment:Comment) {
+  addComment(content:string, user_data:User):Observable<{content:string, user_data:User}> {
+    return this.http.post<{content:string, user_data:User}>(this.url + '/add-comment', {content, user_data})
   }
 
-  addReply(comment_id:number, newReply:Reply) {
+  addReply( 
+    content:string, 
+    replyingto:string, 
+    user_data:User,
+    comment_id:number
+  ):Observable<{content:string, replyingto:string, user_data:User,comment_id:number}> {
+    return this.http.post<{
+      content:string, 
+      replyingto:string, 
+      user_data:User,
+      comment_id:number
+    }>(this.url + '/add-reply', {content, replyingto, user_data, comment_id})
   }
 
   deleteComment(comment_id:number | undefined) {

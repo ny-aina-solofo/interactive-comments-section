@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List
 from app.api.v1.schema.user import UserData
 
-class ReplyLisResponse(BaseModel):
+class ReplyListResponse(BaseModel):
     reply_id: int
     content: str 
     created_at: str
@@ -11,16 +11,22 @@ class ReplyLisResponse(BaseModel):
     user_data : UserData
     comment_id: int
 
-class CommentLisResponse(BaseModel):
+class CommentListResponse(BaseModel):
     comment_id: int
     content: str 
     created_at: str
     score: int
     user_data : UserData
-    replies : List[ReplyLisResponse]
+    replies : List[ReplyListResponse]
 
 
+class CommentCreate(BaseModel):
+    content: str
+    user_data: UserData 
 
-
- 
+class ReplyCreate(BaseModel):
+    content: str
+    replyingto: str
+    user_data: UserData
+    comment_id: int 
 
