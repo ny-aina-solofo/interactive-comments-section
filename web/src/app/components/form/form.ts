@@ -7,8 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { getAgoTime } from '../../utils/get-time';
 
-type FormData =
-  | { type: 'reply'; comment_id: number; username: string }
+type FormData = { type: 'reply'; comment_id: number; username: string }
 
 @Component({
   selector: 'app-form',
@@ -18,14 +17,13 @@ type FormData =
 
 export class FormComponent {
   @Input() data: FormData | undefined  ;
-  // @Input() reply_data: Reply  ;
   @ViewChild('textarea') textarea?: ElementRef<HTMLTextAreaElement>;
   store = inject(CommentStore);
-  user: User[];
+  user: User;
   comment = signal('');
 
   constructor(private commentService: InteractiveCommentsService) {
-    this.user = this.store.userItems();
+    this.user = this.commentService.getUser();
     effect(() => {
       const username = this.data?.username;
       if (username) {
@@ -38,30 +36,31 @@ export class FormComponent {
   addComments() {
     const comment = this.comment().trim();
     if (!comment) return;
-
+    
     if (this.data) {
+      const replyContent = comment.replace(`@${this.data.username} `, ''); 
       const newReply = {
         reply_id: Date.now(),
-        content: comment.replace(`@${this.data.username} `, ''),
-        created_at: getAgoTime(Date.now()),
+        content: replyContent,
+        created_at: new Date().toLocaleString(),
         score: 0,
         replyingto : this.data.username,
         user_data: this.user,
         comment_id: this.data.comment_id
       };  
-      // this.store.addReply(this.data.comment_id, newReply);
-      // this.commentService.addReply(this.data.comment_id, newReply);  
+      this.store.addReply(this.data.comment_id, newReply);
+      this.commentService.addReply(replyContent,this.data.username,this.user,this.data.comment_id).subscribe();  
     } else {
       const newComment = {
         comment_id: Date.now(),
         content: comment,
-        created_at: getAgoTime(Date.now()),
+        created_at: new Date().toLocaleString(),
         score: 0,
         user_data: this.user,
         replies:[]
       };
-      // this.store.addComment(newComment);
-      // this.commentService.addComment(newComment);
+      this.store.addComment(newComment);
+      this.commentService.addComment(comment,this.user).subscribe();
     }
     this.store.hideReplyForm();
     this.comment.set('');

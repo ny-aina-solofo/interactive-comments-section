@@ -29,10 +29,10 @@ export class ReplyCommentComponent {
   @Input() reply_data:Reply;
   @Input() comment_id:number = 0;
   store = inject(CommentStore);
-  // user: User;
+  user: User;
     
   constructor(commentService: InteractiveCommentsService) {
-    // this.user = commentService.getUser();
+    this.user = commentService.getUser();
     this.reply_data = {
       reply_id: 0,
       content: '',
@@ -50,6 +50,6 @@ export class ReplyCommentComponent {
     };
   }
   handleShowForm(){
-    this.store.showReplyForm(this.reply_data.reply_id);
+    this.store.showReplyToReply(this.reply_data.reply_id);
   }
 }

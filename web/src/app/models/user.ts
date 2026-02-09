@@ -1,9 +1,7 @@
 export interface User  {
-  user_id: number;
-  username: string;
-  password: string;
-  avatar : {
+  image: {
     png: string;
     webp: string;
   };
+  username: string;
 }

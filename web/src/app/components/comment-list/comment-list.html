@@ -2,7 +2,7 @@
     @for (comment of store.commentItems(); track comment.comment_id) {
         <comment-item [comment_data]="comment"/>
         @if (comment.replies.length > 0) {
-            @for (reply of comment.replies; track reply.comment_id) {
+            @for (reply of comment.replies; track reply.reply_id) {
                 <div class="ml-10  pl-6" id="reply-comment-container">
                     <reply-item [reply_data]="reply" [comment_id]="comment.comment_id"/>
                 </div>

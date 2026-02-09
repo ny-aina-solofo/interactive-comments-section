@@ -5,24 +5,37 @@ import { InteractiveCommentsService } from '../services/comment.service';
 import { User } from '../models/user';
 import { getAgoTime } from '../utils/get-time';
 
+type ActiveReply =
+  | { type: 'comment'; comment_id: number }
+  | { type: 'reply'; reply_id: number }
+  | null;
+
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class CommentStore {
   private comments = signal<Comment[]>([]);
-  private allUsers = signal<User[]>([]);
   private showForm = signal<boolean>(false);
-  private activeReplyId = signal<number | null>(null);
+  private activeReply = signal<ActiveReply>(null);
   
   // Readonly signals
   readonly commentItems = this.comments.asReadonly();
-  readonly userItems = this.allUsers.asReadonly();
   readonly showFormState = this.showForm.asReadonly();
-  readonly activeReplyIdState = this.activeReplyId.asReadonly();
+  readonly activeReplyState = this.activeReply.asReadonly();
+  readonly activeReplyToCommentId = computed(() => {
+    const value = this.activeReply();
+    return value?.type === 'comment' ? value.comment_id : null;
+  });
 
+  readonly activeReplyToReplyId = computed(() => {
+    const value = this.activeReply();
+    return value?.type === 'reply' ? value.reply_id : null;
+  });
+  
   constructor(commentService: InteractiveCommentsService){
     commentService.getCommentList().subscribe((result)=>this.comments.set(result));   
-    commentService.getUser().subscribe((result)=>this.allUsers.set(result));   
   }
 
   addComment(newComment:Comment) {
@@ -38,13 +51,16 @@ export class CommentStore {
       )
     );
   }
+  showReplyToComment(comment_id: number) {
+    this.activeReply.set({ type: 'comment', comment_id });
+  }
 
-  showReplyForm(comment_id: number) {
-    this.activeReplyId.set(comment_id);
+  showReplyToReply(reply_id: number) {
+    this.activeReply.set({ type: 'reply', reply_id });
   }
 
   hideReplyForm() {
-    this.activeReplyId.set(null);
+    this.activeReply.set(null);
   }
 
   deleteComment(id: number | undefined) {

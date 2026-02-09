@@ -28,9 +28,10 @@ import { BadgeModule } from 'primeng/badge';
 export class CommentItemComponent {
   @Input() comment_data:Comment;
   store = inject(CommentStore);
-    
+  user: User;
+ 
   constructor(commentService: InteractiveCommentsService) {
-
+    this.user = commentService.getUser();
     this.comment_data = {
       comment_id: 0,
       content: '',
@@ -48,6 +49,6 @@ export class CommentItemComponent {
   }
 
   handleShowForm(){
-    this.store.showReplyForm(this.comment_data.comment_id);
+    this.store.showReplyToComment(this.comment_data.comment_id);
   }
 }
