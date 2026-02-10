@@ -5,7 +5,6 @@ import { User } from '../../models/user';
 import { CommentStore } from '../../store/comment-store';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { getAgoTime } from '../../utils/get-time';
 
 type FormData = { type: 'reply'; comment_id: number; username: string }
 
