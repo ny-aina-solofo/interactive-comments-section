@@ -2,7 +2,7 @@
 
 <div align="center">
 
-  <img src="https://www.frontendmentor.io/static/images/logo-mobile.svg" alt="frontendmentor" width="80">
+  <img src="./web/public/icon-reply.svg" alt="reply" width="80">
 
   <h2 align="center">Interactive comments section</h2>
 	
@@ -27,8 +27,8 @@ This is a solution to the [Interactive comments section challenge on Frontend Me
 
 <h2 align="center">Links</h2>
 
-- Solution URL: https://www.frontendmentor.io/solutions/countries-website-iGOcIZEc9v
-- Live Site URL: https://interactive-comments-mg.netlify.app/ 
+- Solution URL: https://www.frontendmentor.io/solutions/interactive-comments-section-solutions-ZTkaAgPR_T
+- Live Site URL: https://interactive-comment-mg.netlify.app/ 
 <br>
 
 ## Table of contents
