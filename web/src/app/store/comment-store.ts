@@ -2,8 +2,6 @@ import {Injectable, signal, computed} from '@angular/core';
 import {Comment} from '../models/comments';
 import { Reply } from '../models/reply';
 import { InteractiveCommentsService } from '../services/comment.service';
-import { User } from '../models/user';
-import { getAgoTime } from '../utils/get-time';
 
 type ActiveReply =
   | { type: 'comment'; comment_id: number }

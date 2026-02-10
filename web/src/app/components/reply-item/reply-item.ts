@@ -10,6 +10,7 @@ import { EditDialogComponent } from '../dialog/edit-dialog';
 import { User } from '../../models/user';
 import { InteractiveCommentsService } from '../../services/comment.service';
 import { BadgeModule } from 'primeng/badge';
+import { GetTimeAgoPipe } from '../../utils/pipe/time-ago.pipe';
 
 @Component({
   selector: 'reply-item',
@@ -20,7 +21,8 @@ import { BadgeModule } from 'primeng/badge';
       CardModule,
       DeleteDialogComponent,
       EditDialogComponent,
-      BadgeModule  
+      BadgeModule,
+      GetTimeAgoPipe  
   ],
   templateUrl: './reply-item.html',
 })
