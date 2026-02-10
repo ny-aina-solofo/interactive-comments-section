@@ -92,10 +92,10 @@ export class EditDialogComponent {
         if (!comment) return;
         if (this.data?.type === "reply") {
             this.store.editReply(this.data?.comment_id, this.data?.reply_id, comment );
-            this.commentService.editReply(this.data?.comment_id, this.data?.reply_id, comment);    
+            this.commentService.editReply(this.data?.reply_id, comment).subscribe();    
         } else {
             this.store.editComment(this.data?.comment_id, comment);
-            this.commentService.editComment(this.data?.comment_id, comment);
+            this.commentService.editComment(this.data?.comment_id, comment).subscribe();
         }
         this.visible = false;
         this.comment = "";
