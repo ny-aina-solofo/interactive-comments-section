@@ -113,3 +113,26 @@ def edit_reply(reply_id: int, reply: ReplyEdit, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(updatedReply)
     return {"success":True}
+
+@router.delete("/delete-comment/{comment_id}", status_code=200)
+def delete_comment(comment_id: int, db: Session = Depends(get_db)) : 
+    db.query(Reply).filter(Reply.comment_id == comment_id).delete()
+    updatedComment = db.query(Comment).filter(Comment.comment_id == comment_id).first()
+    if updatedComment is None:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    db.delete(updatedComment)
+    db.commit()
+    return {"success":True}
+
+@router.delete("/delete-reply/{reply_id}", status_code=200)
+def delete_reply(reply_id: int, db: Session = Depends(get_db)) : 
+    updatedReply = db.query(Reply).filter(Reply.reply_id == reply_id).first()
+    if updatedReply is None:
+        raise HTTPException(status_code=404, detail="reply not found")
+    db.delete(updatedReply)
+    db.commit()
+    
+    return {"success":True}
+
+
+    

@@ -74,10 +74,10 @@ export class DeleteDialogComponent {
     handleDeleteComment() {
         if (this.data?.type === "reply") {
             this.store.deleteReply(this.data?.comment_id, this.data?.reply_id );
-            this.commentService.deleteReply(this.data?.comment_id, this.data?.reply_id );    
+            this.commentService.deleteReply(this.data?.reply_id ).subscribe();    
         } else {
             this.store.deleteComment(this.data?.comment_id);
-            this.commentService.deleteComment(this.data?.comment_id);
+            this.commentService.deleteComment(this.data?.comment_id).subscribe();
         }
         this.visible = false;
     }

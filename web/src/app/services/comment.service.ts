@@ -37,7 +37,7 @@ export class InteractiveCommentsService {
 
 
   addComment(content:string, user_data:User):Observable<{content:string, user_data:User}> {
-    return this.http.post<{content:string, user_data:User}>(this.url + '/add-comment', {content, user_data})
+    return this.http.post<{content:string, user_data:User}>(this.url + '/add-comment', {content, user_data});
   }
 
   addReply( 
@@ -51,14 +51,16 @@ export class InteractiveCommentsService {
       replyingto:string, 
       user_data:User,
       comment_id:number
-    }>(this.url + '/add-reply', {content, replyingto, user_data, comment_id})
+    }>(this.url + '/add-reply', {content, replyingto, user_data, comment_id});
   }
 
-  deleteComment(comment_id:number | undefined) {
+  deleteComment(comment_id:number | undefined):Observable<{comment_id:number | undefined}> {
+    return this.http.delete<{comment_id:number | undefined}>(this.url + `/delete-comment/${comment_id}`);
   }
 
-  deleteReply(comment_id: number, reply_id: number) {
-  
+  deleteReply(reply_id: number):Observable<{reply_id: number}> {
+    return this.http.delete<{reply_id:number }>(this.url + `/delete-reply/${reply_id}`);
+    
   }
 
   editComment(
@@ -68,7 +70,7 @@ export class InteractiveCommentsService {
     return this.http.put<{
       comment_id: number | undefined, 
       content: string
-    }>(this.url + `/edit-comment/${comment_id}`,{content})
+    }>(this.url + `/edit-comment/${comment_id}`,{content});
   }
 
   editReply( 
@@ -78,7 +80,7 @@ export class InteractiveCommentsService {
       return this.http.put<{
       reply_id: number, 
       content: string
-    }>(this.url + `/edit-reply/${reply_id}`,{content})  
+    }>(this.url + `/edit-reply/${reply_id}`,{content});  
   }
 
   updateCommentScore(comment_id:number | undefined, newScore:number){
