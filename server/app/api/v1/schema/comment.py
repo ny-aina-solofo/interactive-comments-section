@@ -35,3 +35,9 @@ class CommentEdit(BaseModel) :
 
 class ReplyEdit(BaseModel) : 
     content: str
+
+class CommentScoreEdit(BaseModel) : 
+    score: int
+
+class ReplyScoreEdit(BaseModel) : 
+    score: int

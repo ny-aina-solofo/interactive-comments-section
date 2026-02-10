@@ -43,10 +43,10 @@ export class ScoreComponent {
         this.score += 1;
         if (this.data?.type === "reply") {
             this.store.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score );    
-            this.commentService.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score);
+            this.commentService.updateReplyScore(this.data?.reply_id, this.score).subscribe();
         } else {
             this.store.updateCommentScore(this.data?.comment_id, this.score);
-            this.commentService.updateCommentScore(this.data?.comment_id, this.score);    
+            this.commentService.updateCommentScore(this.data?.comment_id, this.score).subscribe();    
         }
     }
 
@@ -55,10 +55,10 @@ export class ScoreComponent {
         this.score -= 1;
         if (this.data?.type === "reply") {
             this.store.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score );    
-            this.commentService.updateReplyScore(this.data?.comment_id, this.data?.reply_id, this.score);
+            this.commentService.updateReplyScore(this.data?.reply_id, this.score).subscribe();
         } else {
             this.store.updateCommentScore(this.data?.comment_id, this.score);
-            this.commentService.updateCommentScore(this.data?.comment_id, this.score);    
+            this.commentService.updateCommentScore(this.data?.comment_id, this.score).subscribe();    
         }
     }
 }

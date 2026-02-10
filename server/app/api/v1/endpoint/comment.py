@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.api.v1.schema.comment import CommentListResponse, CommentCreate,ReplyCreate,CommentEdit,ReplyEdit
+from app.api.v1.schema.comment import CommentListResponse, CommentCreate,ReplyCreate,CommentEdit,ReplyEdit,CommentScoreEdit,ReplyScoreEdit
 from app.api.v1.schema.user import UserList
 from sqlalchemy.orm import Session
 from typing import List
@@ -134,5 +134,24 @@ def delete_reply(reply_id: int, db: Session = Depends(get_db)) :
     
     return {"success":True}
 
+@router.put("/edit-comment-score/{comment_id}", status_code=200)
+def edit_comment_score(comment_id: int, comment: CommentScoreEdit, db: Session = Depends(get_db)):
+    updatedComment = db.query(Comment).filter(Comment.comment_id == comment_id).first()
+    if updatedComment is None:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    updatedComment.score = comment.score
+    db.commit()
+    db.refresh(updatedComment)
+    return {"success":True}
 
+
+@router.put("/edit-reply-score/{reply_id}", status_code=200)
+def edit_reply_score(reply_id: int, reply: ReplyScoreEdit, db: Session = Depends(get_db)):
+    updatedReply = db.query(Reply).filter(Reply.reply_id == reply_id).first()
+    if updatedReply is None:
+        raise HTTPException(status_code=404, detail="reply not found")
+    updatedReply.score = reply.score
+    db.commit()
+    db.refresh(updatedReply)
+    return {"success":True}
     
