@@ -83,10 +83,24 @@ export class InteractiveCommentsService {
     }>(this.url + `/edit-reply/${reply_id}`,{content});  
   }
 
-  updateCommentScore(comment_id:number | undefined, newScore:number){
+  updateCommentScore(
+    comment_id:number | undefined, 
+    score:number
+  ) : Observable<{comment_id:number | undefined, score:number}> {
+    return this.http.put<{
+      comment_id:number | undefined, 
+      score:number
+    }>(this.url + `/edit-comment-score/${comment_id}`, {score})
   }
 
-  updateReplyScore(comment_id:number, reply_id:number, newScore:number){
+  updateReplyScore(  
+    reply_id:number | undefined, 
+    score:number
+  ) : Observable<{reply_id:number | undefined, score:number}> {
+    return this.http.put<{
+      reply_id:number | undefined, 
+      score:number
+    }>(this.url + `/edit-reply-score/${reply_id}`, {score})
   }
 
 
