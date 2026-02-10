@@ -37,7 +37,7 @@
                         }
             
                         <span class="text-grey-500 ">
-                            {{ comment_data.created_at }}
+                            {{ comment_data.created_at | timeAgo}}
                         </span>
                     </div>
                     <!-- Desktop actions -->
@@ -65,7 +65,7 @@
 
                 <!-- Text -->
                 <p class="text-grey-500 leading-relaxed">
-                    {{ comment_data.content }}
+                    {{ comment_data.content}}
                 </p>
 
                 <!-- Mobile footer (EXACT image layout) -->
