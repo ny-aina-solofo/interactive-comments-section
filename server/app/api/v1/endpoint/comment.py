@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.api.v1.schema.comment import CommentListResponse, CommentCreate,ReplyCreate
+from app.api.v1.schema.comment import CommentListResponse, CommentCreate,ReplyCreate,CommentEdit,ReplyEdit
 from app.api.v1.schema.user import UserList
 from sqlalchemy.orm import Session
 from typing import List
@@ -92,4 +92,24 @@ def add_reply(reply: ReplyCreate, db: Session = Depends(get_db)):
     db.add(new_reply)
     db.commit()
     db.refresh(new_reply)
+    return {"success":True}
+
+@router.put("/edit-comment/{comment_id}", status_code=200)
+def edit_comment(comment_id: int, comment: CommentEdit, db: Session = Depends(get_db)):
+    updatedComment = db.query(Comment).filter(Comment.comment_id == comment_id).first()
+    if updatedComment is None:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    updatedComment.content = comment.content
+    db.commit()
+    db.refresh(updatedComment)
+    return {"success":True}
+
+@router.put("/edit-reply/{reply_id}", status_code=200)
+def edit_reply(reply_id: int, reply: ReplyEdit, db: Session = Depends(get_db)):
+    updatedReply = db.query(Reply).filter(Reply.reply_id == reply_id).first()
+    if updatedReply is None:
+        raise HTTPException(status_code=404, detail="reply not found")
+    updatedReply.content = reply.content
+    db.commit()
+    db.refresh(updatedReply)
     return {"success":True}

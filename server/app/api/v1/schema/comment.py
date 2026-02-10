@@ -30,3 +30,8 @@ class ReplyCreate(BaseModel):
     user_data: UserData
     comment_id: int 
 
+class CommentEdit(BaseModel) : 
+    content: str
+
+class ReplyEdit(BaseModel) : 
+    content: str

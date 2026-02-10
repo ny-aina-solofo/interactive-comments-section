@@ -61,10 +61,24 @@ export class InteractiveCommentsService {
   
   }
 
-  editComment(id: number | undefined, newContent: string) {
+  editComment(
+      comment_id: number | undefined, 
+      content: string
+  ):Observable<{comment_id: number | undefined, content: string}> {
+    return this.http.put<{
+      comment_id: number | undefined, 
+      content: string
+    }>(this.url + `/edit-comment/${comment_id}`,{content})
   }
 
-  editReply(comment_id: number, reply_id: number, newContent: string ) {
+  editReply( 
+    reply_id: number, 
+    content: string 
+  ):Observable<{reply_id: number, content: string }> {
+      return this.http.put<{
+      reply_id: number, 
+      content: string
+    }>(this.url + `/edit-reply/${reply_id}`,{content})  
   }
 
   updateCommentScore(comment_id:number | undefined, newScore:number){
