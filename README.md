@@ -71,7 +71,7 @@ Users should be able to:
 
 **Frontend** : Angular 21, PrimeNG, Tailwind  
 **Backend** : FastApi  
-**Host**: Netllify, Render
+**Host**: Netlify
 **Database**: Postgresql  
  
 ### What I learned
@@ -96,4 +96,6 @@ Users should be able to:
 
 ## Run project locally
 
-This project was generated with Angular CLI version ~21.1.1. To run this project locally. Forked this repo. Install node_modules by running `npm install` Run `npm start` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+This project was generated with Angular CLI version ~21.1.1 and fastapi 0.128. To run this project locally. Forked this repo. 
+- For the frontend, install node_modules by running `npm install`. Run `npm start` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+- For the backend, create a virtual virtual environments and install packages by running `python -m pip install -r requirements.txt`. Run `python server.py` for dev server
